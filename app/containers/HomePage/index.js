@@ -11,12 +11,48 @@ import messages from './messages';
 import DefaultStyle from './Styles';
 import Loader from '../../base-components/Loader';
 
-export default function HomePage() {
-  return (
+class HomePage extends Component{
+
+  state = {
+    userData: [],
+    isLoading: true,
+  };
+
+  componentWillMount(){
+    this.setState({isLoading: true});
+    const url = 'https://jsonplaceholder.typicode.com/users/';
+    fetch(url, {method: 'GET'})
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      console.log('data-----',data);
+    isLoading: false,
+      this.setState({userData: data, isLoading: false });
+    })
+    
+  }
+    // console.log('hello world');
+  
+  render(){
+    return (
     <DefaultStyle>
       <Suspense fallback={<Loader />}>
-          <FormattedMessage {...messages.header} />
+        
+          <ul>
+             {
+              this.state.isLoading ? <Loader/> :
+              this.state.userData.map(function(val){
+               console.log(val.name);
+              return <li>{val.name}</li>
+              })
+            }
+          </ul>
+        
       </Suspense>
     </DefaultStyle>
-  );
+   );
+  }
 }
+
+export default HomePage;
