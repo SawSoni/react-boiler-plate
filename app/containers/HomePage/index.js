@@ -9,6 +9,7 @@ import React, { Component, Suspense}from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import DefaultStyle from './Styles';
+import { connect } from "react-redux";
 import Loader from '../../base-components/Loader';
 
 class HomePage extends Component{
@@ -27,8 +28,9 @@ class HomePage extends Component{
     })
     .then((data) => {
       console.log('data-----',data);
-    isLoading: false,
-      this.setState({userData: data, isLoading: false });
+      setTimeout(() => {
+        this.setState({userData: data, isLoading: false });
+      }, 2000) 
     })
     
   }
@@ -55,4 +57,14 @@ class HomePage extends Component{
   }
 }
 
-export default HomePage;
+
+const mapStateToProps = state => ({ users: state })
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getUsers: () => dispatch(getUsers()),
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (HomePage)
