@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import DefaultStyle from './Styles';
 import { connect } from "react-redux";
+import {getUsers} from './actions';
 import Loader from '../../base-components/Loader';
 
 class HomePage extends Component{
@@ -20,8 +21,8 @@ class HomePage extends Component{
   };
 
   componentWillMount(){
-    this.setState({isLoading: true});
-    const url = 'https://jsonplaceholder.typicode.com/users/';
+    this.setState({isLoading: false});
+    /* const url = 'https://jsonplaceholder.typicode.com/users/';
     fetch(url, {method: 'GET'})
     .then((response) => {
       return response.json()
@@ -31,12 +32,17 @@ class HomePage extends Component{
       setTimeout(() => {
         this.setState({userData: data, isLoading: false });
       }, 2000) 
-    })
+    }) */
+
+    const { getUsers } = this.props;
+        getUsers();
     
   }
     // console.log('hello world');
   
   render(){
+    console.log(this.props.users.userFlow);
+    
     return (
     <DefaultStyle>
       <Suspense fallback={<Loader />}>
@@ -44,8 +50,8 @@ class HomePage extends Component{
           <ul>
              {
               this.state.isLoading ? <Loader/> :
-              this.state.userData.map(function(val){
-               console.log(val.name);
+              this.props.users.userFlow.map(function(val){
+              console.log(val.name);
               return <li>{val.name}</li>
               })
             }

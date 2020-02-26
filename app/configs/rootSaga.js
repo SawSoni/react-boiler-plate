@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, put, all } from 'redux-saga/effects';
+import { takeLatest, put, all, call } from 'redux-saga/effects';
 import fetchDataFunction from './serviceFunction';
 import { getUserAsyc } from '../containers/HomePage/actions';
 import { GET_USERS } from '../containers/HomePage/constants';
