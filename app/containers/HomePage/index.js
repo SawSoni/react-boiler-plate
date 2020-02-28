@@ -12,53 +12,38 @@ import DefaultStyle from './Styles';
 import { connect } from "react-redux";
 import {getUsers} from './actions';
 import Loader from '../../base-components/Loader';
+import Header from '../Header/index';
 
 class HomePage extends Component{
 
   state = {
-    userData: [],
     isLoading: true,
   };
 
   componentWillMount(){
     this.setState({isLoading: false});
-    /* const url = 'https://jsonplaceholder.typicode.com/users/';
-    fetch(url, {method: 'GET'})
-    .then((response) => {
-      return response.json()
-    })
-    .then((data) => {
-      console.log('data-----',data);
-      setTimeout(() => {
-        this.setState({userData: data, isLoading: false });
-      }, 2000) 
-    }) */
-
     const { getUsers } = this.props;
         getUsers();
-    
   }
-    // console.log('hello world');
-  
   render(){
     console.log(this.props.users.userFlow);
-    
     return (
-    <DefaultStyle>
-      <Suspense fallback={<Loader />}>
-        
-          <ul>
-             {
-              this.state.isLoading ? <Loader/> :
-              this.props.users.userFlow.map(function(val){
-              console.log(val.name);
-              return <li>{val.name}</li>
-              })
-            }
-          </ul>
-        
-      </Suspense>
-    </DefaultStyle>
+    <React.Fragment>
+      <Header/>
+      <DefaultStyle>
+        <h1>User List</h1>
+        <Suspense fallback={<Loader />}>
+            <ul className="listBox">
+              {
+                this.state.isLoading ? <Loader/> :
+                this.props.users.userFlow.map(function(val){
+                return <li className="listDesign">{val.name}</li>
+                })
+              }
+            </ul>
+        </Suspense>
+      </DefaultStyle>
+    </React.Fragment>
    );
   }
 }
