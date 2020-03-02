@@ -10,8 +10,10 @@ const DefaultStyle = styled('div')`
     .listDesign {
         width: 100px;
         height: 100px;
-        padding: 10px;
+        border-radius: 100px;
+        /* padding: 10px; */
         text-align: center;
+        line-height: 100px;
         background: lightGreen;
         color: white;
         box-shadow: 1px 1px 1px #333;
